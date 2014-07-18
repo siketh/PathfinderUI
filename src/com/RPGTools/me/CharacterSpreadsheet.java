@@ -24,7 +24,7 @@ public class CharacterSpreadsheet
 {
 	ArrayList<JTextField> fieldsList = CharacterSheetTab.getFieldsList();
 	SpreadsheetService service = new SpreadsheetService("Service");
-	WorksheetEntry sheet = getWorksheet("Roman");
+	WorksheetEntry sheet = getWorksheet("Trevor");
 
 	public CharacterSpreadsheet() throws IOException, ServiceException, URISyntaxException
 	{
@@ -130,9 +130,12 @@ public class CharacterSpreadsheet
 		}
 	}
 	
-	public WorksheetEntry loadCharacter(String name) throws AuthenticationException, MalformedURLException, IOException, ServiceException, URISyntaxException
+	public void loadCharacter(String name) throws AuthenticationException, MalformedURLException, IOException, ServiceException, URISyntaxException
 	{
 		System.out.println("*********************** LOADING ***********************");
-		return getWorksheet(name);
+		sheet = getWorksheet(name);
+		verifySpreadsheet(sheet);
+		printCells(sheet);
+		updateCharacterSheet(sheet);
 	}
 }

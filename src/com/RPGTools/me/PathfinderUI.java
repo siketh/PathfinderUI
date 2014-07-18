@@ -131,7 +131,7 @@ public class PathfinderUI extends JFrame
 		{
 			try
 			{
-				cSpread.loadCharacter("Trevor");
+				cSpread.loadCharacter("Roman");
 			} catch (IOException | ServiceException | URISyntaxException e1)
 			{
 				// TODO Auto-generated catch block
