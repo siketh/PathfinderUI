@@ -108,6 +108,9 @@ public class PathfinderUI extends JFrame
 
 		CharacterSheetTab characterSheetTab = new CharacterSheetTab();
 		TabPane.add(CharacterSheetTab.getSheetPanel());
+		
+		MacroTab macroTab = new MacroTab();
+		TabPane.add(MacroTab.getMacroPanel());
 	}
 	
 	class SaveAction implements ActionListener

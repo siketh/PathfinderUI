@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -25,7 +24,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 import java.awt.Dimension;
 
-public class CharacterSheetTab extends JFrame implements ActionListener
+public class CharacterSheetTab implements ActionListener
 {
 
 	ArrayList<JTextField> STRList = new ArrayList<JTextField>();

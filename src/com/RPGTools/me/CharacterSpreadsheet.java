@@ -25,6 +25,7 @@ public class CharacterSpreadsheet
 	ArrayList<JTextField> fieldsList = CharacterSheetTab.getFieldsList();
 	SpreadsheetService service = new SpreadsheetService("Service");
 	WorksheetEntry sheet = getWorksheet("Trevor");
+	static List<String> characters = null;
 
 	public CharacterSpreadsheet() throws IOException, ServiceException, URISyntaxException
 	{
@@ -61,6 +62,28 @@ public class CharacterSpreadsheet
 		}
 		
 		return worksheet;
+	}
+	
+	public List<String> getWorksheetList() throws IOException, ServiceException
+	{
+		String SPREADSHEET_URL = "https://spreadsheets.google.com/feeds/spreadsheets/private/full";
+
+		service.setUserCredentials("troman.sw.dev@gmail.com", "149253649");
+
+		URL sheetListURL = new URL(SPREADSHEET_URL);
+		SpreadsheetQuery query = new SpreadsheetQuery(sheetListURL);
+		query.setTitleQuery("Character Sheet");
+		SpreadsheetFeed sfeed = service.getFeed(query, SpreadsheetFeed.class);
+
+		List<SpreadsheetEntry> spreadsheetEntries = sfeed.getEntries();
+		SpreadsheetEntry spreadsheet = spreadsheetEntries.get(0);
+
+		List<WorksheetEntry> worksheets = spreadsheet.getWorksheets();
+		
+		for(int i=0; i<worksheets.size(); i++)
+			characters.add(worksheets.get(i).getTitle().getPlainText());
+
+		return characters;
 	}
 
 	public void verifySpreadsheet(WorksheetEntry worksheet) throws IOException, ServiceException
