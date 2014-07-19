@@ -17,8 +17,7 @@ import net.miginfocom.swing.MigLayout;
 
 import com.google.gdata.util.ServiceException;
 
-public class EditMacroDialog extends JDialog
-{
+public class EditMacroDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textField;
@@ -29,13 +28,13 @@ public class EditMacroDialog extends JDialog
 	 * @throws ServiceException
 	 * @throws IOException
 	 */
-	public EditMacroDialog() throws IOException, ServiceException
-	{
+	public EditMacroDialog() throws IOException, ServiceException {
 		setBounds(100, 100, 661, 392);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(new MigLayout("", "[][][][][][][][][][][][]", "[][][][][][][][][][][][][][]"));
+		contentPanel.setLayout(new MigLayout("", "[][][][][][][][][][][][]",
+				"[][][][][][][][][][][][][][]"));
 		{
 			Checkbox checkbox = new Checkbox("STR Score");
 			contentPanel.add(checkbox, "cell 1 0");

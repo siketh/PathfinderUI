@@ -26,6 +26,7 @@ public class CharacterSpreadsheet
 	SpreadsheetService service = new SpreadsheetService("Service");
 	SpreadsheetEntry spreadsheet = getSpreadsheet();
 	WorksheetEntry worksheet = getWorksheet("Trevor");
+	static ArrayList<String> characters;
 
 	public CharacterSpreadsheet() throws IOException, ServiceException, URISyntaxException
 	{
@@ -67,16 +68,23 @@ public class CharacterSpreadsheet
 		return worksheet;
 	}
 	
-	/*
-	public void getCharacters() throws IOException, ServiceException
+	
+	public ArrayList<String> makeCharactersList() throws IOException, ServiceException
 	{
-		ArrayList<String> characters = new ArrayList<String>();
+		ArrayList<String> chars = new ArrayList<String>();
 		List<WorksheetEntry> worksheets = spreadsheet.getWorksheets();
 		
 		for(int i=0; i<worksheets.size(); i++)
-			characters.add(worksheets.get(i).getTitle().getPlainText());
+			chars.add(worksheets.get(i).getTitle().getPlainText());
+		
+		return chars;
 	}
-	*/
+	
+	public static ArrayList<String> getCharacters()
+	{
+		return characters;
+	}
+	
 
 	public void verifySpreadsheet(WorksheetEntry worksheet) throws IOException, ServiceException
 	{

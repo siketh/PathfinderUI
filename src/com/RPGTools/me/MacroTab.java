@@ -11,12 +11,14 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import com.google.gdata.util.ServiceException;
 
 public class MacroTab
 {
 	private static JPanel Macros;
+	public static ArrayList<JTextField> fieldsList;
 	ArrayList<JButton> macroButtons = new ArrayList<JButton>();
 	int BUTTON_COUNT = 0;
 
@@ -49,6 +51,7 @@ public class MacroTab
 	public void editMacro(JButton button) throws IOException, ServiceException
 	{
 		System.out.println(button.getText());
+		fieldsList = CharacterSheetTab.getFieldsList();
 		EditMacroDialog newDialog = new EditMacroDialog();
 		newDialog.setVisible(true);
 	}
