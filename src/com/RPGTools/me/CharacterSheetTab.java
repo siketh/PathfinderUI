@@ -27,22 +27,22 @@ import java.awt.Dimension;
 public class CharacterSheetTab implements ActionListener
 {
 
-	ArrayList<JTextField> STRList = new ArrayList<JTextField>();
-	ArrayList<JTextField> DEXList = new ArrayList<JTextField>();
-	ArrayList<JTextField> CONList = new ArrayList<JTextField>();
-	ArrayList<JTextField> INTList = new ArrayList<JTextField>();
-	ArrayList<JTextField> WISList = new ArrayList<JTextField>();
-	ArrayList<JTextField> CHAList = new ArrayList<JTextField>();
-	ArrayList<JTextField> initList = new ArrayList<JTextField>();
-	ArrayList<JTextField> fortList = new ArrayList<JTextField>();
-	ArrayList<JTextField> refList = new ArrayList<JTextField>();
-	ArrayList<JTextField> wilList = new ArrayList<JTextField>();
-	ArrayList<JTextField> acList = new ArrayList<JTextField>();
-	ArrayList<JTextField> abMeleeList = new ArrayList<JTextField>();
-	ArrayList<JTextField> abRangedList = new ArrayList<JTextField>();
-	ArrayList<JTextField> abCMBList = new ArrayList<JTextField>();
-	static ArrayList<JTextField> fieldsList = new ArrayList<JTextField>();
-	private static JPanel Sheet;
+	public ArrayList<JTextField> STRList = new ArrayList<JTextField>();
+	public ArrayList<JTextField> DEXList = new ArrayList<JTextField>();
+	public ArrayList<JTextField> CONList = new ArrayList<JTextField>();
+	public ArrayList<JTextField> INTList = new ArrayList<JTextField>();
+	public ArrayList<JTextField> WISList = new ArrayList<JTextField>();
+	public ArrayList<JTextField> CHAList = new ArrayList<JTextField>();
+	public ArrayList<JTextField> initList = new ArrayList<JTextField>();
+	public ArrayList<JTextField> fortList = new ArrayList<JTextField>();
+	public ArrayList<JTextField> refList = new ArrayList<JTextField>();
+	public ArrayList<JTextField> wilList = new ArrayList<JTextField>();
+	public ArrayList<JTextField> acList = new ArrayList<JTextField>();
+	public ArrayList<JTextField> abMeleeList = new ArrayList<JTextField>();
+	public ArrayList<JTextField> abRangedList = new ArrayList<JTextField>();
+	public ArrayList<JTextField> abCMBList = new ArrayList<JTextField>();
+	public static ArrayList<JTextField> fieldsList = new ArrayList<JTextField>();
+	public static JPanel Sheet;
 	private JTextField hpDRField;
 	private JTextField strTempSField;
 	private JTextField strModField;

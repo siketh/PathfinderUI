@@ -10,11 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
 
 import com.google.gdata.util.ServiceException;
 
@@ -31,7 +27,7 @@ public class MacroTab
 		Macros.setName("Macros");
 
 		JButton newMacroButton = new JButton("Create New Macro");
-		newMacroButton.addActionListener(new CreateNewMacro());
+		newMacroButton.addActionListener(new CreateNewMacroAction());
 		Macros.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		Macros.add(newMacroButton);
@@ -50,21 +46,14 @@ public class MacroTab
 		return Macros;
 	}
 	
-	public void editMacro(JButton button)
+	public void editMacro(JButton button) throws IOException, ServiceException
 	{
 		System.out.println(button.getText());
-
-		JDialog editMacroDialog = new JDialog();
-		editMacroDialog.setModal(true);
-		editMacroDialog.setEnabled(true);
-		editMacroDialog.setVisible(true);
-		editMacroDialog.setSize(400, 400);
-		
-		JTextArea test = new JTextArea();
-		editMacroDialog.add(test);
+		EditMacroDialog newDialog = new EditMacroDialog();
+		newDialog.setVisible(true);
 	}
-
-	class CreateNewMacro implements ActionListener
+	
+	class CreateNewMacroAction implements ActionListener
 	{
 		public void actionPerformed(ActionEvent e)
 		{
@@ -92,7 +81,14 @@ public class MacroTab
 			{
 				// Right Click
 				System.out.println("Right Click = Edit Action");
-				editMacro((JButton)e.getSource());
+				try
+				{
+					editMacro((JButton)e.getSource());
+				} catch (IOException | ServiceException e1)
+				{
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		}
 

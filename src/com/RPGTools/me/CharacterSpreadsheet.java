@@ -24,17 +24,17 @@ public class CharacterSpreadsheet
 {
 	ArrayList<JTextField> fieldsList = CharacterSheetTab.getFieldsList();
 	SpreadsheetService service = new SpreadsheetService("Service");
-	WorksheetEntry sheet = getWorksheet("Trevor");
-	static List<String> characters = null;
+	SpreadsheetEntry spreadsheet = getSpreadsheet();
+	WorksheetEntry worksheet = getWorksheet("Trevor");
 
 	public CharacterSpreadsheet() throws IOException, ServiceException, URISyntaxException
 	{
-		verifySpreadsheet(sheet);
-		printCells(sheet);
-		updateCharacterSheet(sheet);
+		verifySpreadsheet(worksheet);
+		printCells(worksheet);
+		updateCharacterSheet(worksheet);
 	}
 
-	public WorksheetEntry getWorksheet(String name) throws IOException, ServiceException
+	public SpreadsheetEntry getSpreadsheet() throws IOException, ServiceException
 	{
 		String SPREADSHEET_URL = "https://spreadsheets.google.com/feeds/spreadsheets/private/full";
 
@@ -47,10 +47,13 @@ public class CharacterSpreadsheet
 
 		List<SpreadsheetEntry> spreadsheetEntries = sfeed.getEntries();
 		SpreadsheetEntry spreadsheet = spreadsheetEntries.get(0);
-
-		List<WorksheetEntry> worksheets = spreadsheet.getWorksheets();
 		
-		WorksheetEntry worksheet = new WorksheetEntry();
+		return spreadsheet;
+	}
+	
+	public WorksheetEntry getWorksheet(String name) throws IOException, ServiceException
+	{
+		List<WorksheetEntry> worksheets = spreadsheet.getWorksheets();
 		
 		for(int i=0; i<worksheets.size(); i++)
 		{
@@ -64,27 +67,16 @@ public class CharacterSpreadsheet
 		return worksheet;
 	}
 	
-	public List<String> getWorksheetList() throws IOException, ServiceException
+	/*
+	public void getCharacters() throws IOException, ServiceException
 	{
-		String SPREADSHEET_URL = "https://spreadsheets.google.com/feeds/spreadsheets/private/full";
-
-		service.setUserCredentials("troman.sw.dev@gmail.com", "149253649");
-
-		URL sheetListURL = new URL(SPREADSHEET_URL);
-		SpreadsheetQuery query = new SpreadsheetQuery(sheetListURL);
-		query.setTitleQuery("Character Sheet");
-		SpreadsheetFeed sfeed = service.getFeed(query, SpreadsheetFeed.class);
-
-		List<SpreadsheetEntry> spreadsheetEntries = sfeed.getEntries();
-		SpreadsheetEntry spreadsheet = spreadsheetEntries.get(0);
-
+		ArrayList<String> characters = new ArrayList<String>();
 		List<WorksheetEntry> worksheets = spreadsheet.getWorksheets();
 		
 		for(int i=0; i<worksheets.size(); i++)
 			characters.add(worksheets.get(i).getTitle().getPlainText());
-
-		return characters;
 	}
+	*/
 
 	public void verifySpreadsheet(WorksheetEntry worksheet) throws IOException, ServiceException
 	{
@@ -133,7 +125,6 @@ public class CharacterSpreadsheet
 	{
 		System.out.println("*********************** SAVING ***********************");
 		
-		WorksheetEntry worksheet = sheet;
 		// Fetch the cell feed of the worksheet.
 		URL cellFeedUrl = new URI(worksheet.getCellFeedUrl().toString() + "?min-row=2&min-col=2&max-col=2").toURL();
 		CellFeed cellFeed = service.getFeed(cellFeedUrl, CellFeed.class);
@@ -156,9 +147,9 @@ public class CharacterSpreadsheet
 	public void loadCharacter(String name) throws AuthenticationException, MalformedURLException, IOException, ServiceException, URISyntaxException
 	{
 		System.out.println("*********************** LOADING ***********************");
-		sheet = getWorksheet(name);
-		verifySpreadsheet(sheet);
-		printCells(sheet);
-		updateCharacterSheet(sheet);
+		worksheet = getWorksheet(name);
+		verifySpreadsheet(worksheet);
+		printCells(worksheet);
+		updateCharacterSheet(worksheet);
 	}
 }
