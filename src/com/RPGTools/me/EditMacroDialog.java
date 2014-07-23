@@ -3,349 +3,288 @@ package com.RPGTools.me;
 import java.awt.BorderLayout;
 import java.awt.Checkbox;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
 
 import net.miginfocom.swing.MigLayout;
 
 import com.google.gdata.util.ServiceException;
 
-public class EditMacroDialog extends JDialog {
+public class EditMacroDialog extends JDialog implements ActionListener {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField textField;
-
+	private JTextField macroNameField;
+	ArrayList<Checkbox> checkboxesList;
+	public static JButton okButton;
+	public static JButton cancelButton;
+	public static MacroButton edittedMacro;
+	
 	/**
 	 * Create the dialog.
 	 * 
 	 * @throws ServiceException
 	 * @throws IOException
 	 */
-	public EditMacroDialog() throws IOException, ServiceException {
-		setBounds(100, 100, 661, 392);
+	public EditMacroDialog(MacroButton macro) throws IOException, ServiceException { 
+		checkboxesList = new ArrayList<Checkbox>();
+		initDialogUI();
+		
+		if(macro.getCheckedList().isEmpty() == false)
+		{	
+			for(int i=0; i<checkboxesList.size(); i++)
+				checkboxesList.get(i).setState(macro.getCheckedList().get(i).getState());
+		}
+		
+		edittedMacro = macro;
+		macroNameField.setText(macro.getButton().getText());
+		contentPanel.updateUI();
+	}
+
+	public void initDialogUI()
+	{
+		setBounds(100, 100, 661, 605);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(new MigLayout("", "[][][][][][][][][][][][]",
-				"[][][][][][][][][][][][][][]"));
-		{
-			Checkbox checkbox = new Checkbox("STR Score");
-			contentPanel.add(checkbox, "cell 1 0");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 2 0");
-		}
-		{
-			Checkbox checkbox = new Checkbox("Initiative");
-			contentPanel.add(checkbox, "cell 3 0");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 4 0");
-		}
-		{
-			Checkbox checkbox = new Checkbox("Total AC");
-			contentPanel.add(checkbox, "cell 5 0");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 6 0");
-		}
-		{
-			Checkbox checkbox = new Checkbox("Melee Attack Bonus");
-			contentPanel.add(checkbox, "cell 7 0");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 8 0");
-		}
-		{
-			Checkbox checkbox = new Checkbox("d2");
-			contentPanel.add(checkbox, "cell 10 0");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 11 0");
-		}
-		{
-			Checkbox checkbox = new Checkbox("DEX Score");
-			contentPanel.add(checkbox, "cell 1 1");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 2 1");
-		}
-		{
-			Checkbox checkbox = new Checkbox("Fortitude");
-			contentPanel.add(checkbox, "cell 3 1");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 4 1");
-		}
-		{
-			Checkbox checkbox = new Checkbox("Armor");
-			contentPanel.add(checkbox, "cell 5 1");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 6 1");
-		}
-		{
-			Checkbox checkbox = new Checkbox("CMB Attack Bonus");
-			contentPanel.add(checkbox, "cell 7 1");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 8 1");
-		}
-		{
-			Checkbox checkbox = new Checkbox("d3");
-			contentPanel.add(checkbox, "cell 10 1");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 11 1");
-		}
-		{
-			Checkbox checkbox = new Checkbox("INT Score");
-			contentPanel.add(checkbox, "cell 1 2");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 2 2");
-		}
-		{
-			Checkbox checkbox = new Checkbox("Reflex");
-			contentPanel.add(checkbox, "cell 3 2");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 4 2");
-		}
-		{
-			Checkbox checkbox = new Checkbox("Shield");
-			contentPanel.add(checkbox, "cell 5 2");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 6 2");
-		}
-		{
-			Checkbox checkbox = new Checkbox("Ranged Attack Bonus");
-			contentPanel.add(checkbox, "cell 7 2");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 8 2");
-		}
-		{
-			Checkbox checkbox = new Checkbox("d4");
-			contentPanel.add(checkbox, "cell 10 2");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 11 2");
-		}
-		{
-			Checkbox checkbox = new Checkbox("WIS Score");
-			contentPanel.add(checkbox, "cell 1 3");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 2 3");
-		}
-		{
-			Checkbox checkbox = new Checkbox("Will");
-			contentPanel.add(checkbox, "cell 3 3");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 4 3");
-		}
-		{
-			Checkbox checkbox = new Checkbox("Dodge");
-			contentPanel.add(checkbox, "cell 5 3");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 6 3");
-		}
-		{
-			Checkbox checkbox = new Checkbox("d6");
-			contentPanel.add(checkbox, "cell 10 3");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 11 3");
-		}
-		{
-			Checkbox checkbox = new Checkbox("CHA Score");
-			contentPanel.add(checkbox, "cell 1 4");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 2 4");
-		}
-		{
-			Checkbox checkbox = new Checkbox("Total HP");
-			contentPanel.add(checkbox, "cell 3 4");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 4 4");
-		}
-		{
-			Checkbox checkbox = new Checkbox("Size Mod");
-			contentPanel.add(checkbox, "cell 5 4");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 6 4");
-		}
-		{
-			Checkbox checkbox = new Checkbox("d8");
-			contentPanel.add(checkbox, "cell 10 4");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 11 4");
-		}
-		{
-			Checkbox checkbox = new Checkbox("STR Mod");
-			contentPanel.add(checkbox, "cell 1 5");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 2 5");
-		}
-		{
-			Checkbox checkbox = new Checkbox("Current HP");
-			contentPanel.add(checkbox, "cell 3 5");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 4 5");
-		}
-		{
-			Checkbox checkbox = new Checkbox("Natural");
-			contentPanel.add(checkbox, "cell 5 5");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 6 5");
-		}
-		{
-			Checkbox checkbox = new Checkbox("d10");
-			contentPanel.add(checkbox, "cell 10 5");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 11 5");
-		}
-		{
-			Checkbox checkbox = new Checkbox("DEX Mod");
-			contentPanel.add(checkbox, "cell 1 6");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 2 6");
-		}
-		{
-			Checkbox checkbox = new Checkbox("DR");
-			contentPanel.add(checkbox, "cell 3 6");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 4 6");
-		}
-		{
-			Checkbox checkbox = new Checkbox("Deflect");
-			contentPanel.add(checkbox, "cell 5 6");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 6 6");
-		}
-		{
-			Checkbox checkbox = new Checkbox("d20");
-			contentPanel.add(checkbox, "cell 10 6");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 11 6");
-		}
-		{
-			Checkbox checkbox = new Checkbox("INT Mod");
-			contentPanel.add(checkbox, "cell 1 7");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 2 7");
-		}
-		{
-			Checkbox checkbox = new Checkbox("Misc AC");
-			contentPanel.add(checkbox, "cell 5 7");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 6 7");
-		}
-		{
-			Checkbox checkbox = new Checkbox("WIS Mod");
-			contentPanel.add(checkbox, "cell 1 8");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 2 8");
-		}
-		{
-			Checkbox checkbox = new Checkbox("Touch AC");
-			contentPanel.add(checkbox, "cell 5 8");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 6 8");
-		}
-		{
-			Checkbox checkbox = new Checkbox("CHA Mod");
-			contentPanel.add(checkbox, "cell 1 9");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 2 9");
-		}
-		{
-			Checkbox checkbox = new Checkbox("CMD ");
-			contentPanel.add(checkbox, "cell 5 9");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 6 9");
-		}
-		{
-			Checkbox checkbox = new Checkbox("Flat Footed AC");
-			contentPanel.add(checkbox, "cell 5 10");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 6 10");
-		}
-		{
-			Checkbox checkbox = new Checkbox("FCMD");
-			contentPanel.add(checkbox, "cell 5 11");
-		}
-		{
-			JSpinner spinner = new JSpinner();
-			contentPanel.add(spinner, "cell 6 11");
+		contentPanel.setLayout(new MigLayout("", "[][][][][]", "[]"));
+		{
+			JPanel abilityPanel = new JPanel();
+			abilityPanel.setBorder(new TitledBorder(null, "Abilities", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			contentPanel.add(abilityPanel, "cell 0 0,grow");
+			abilityPanel.setLayout(new MigLayout("", "[]", "[][][][][][][][][][]"));
+			{
+				Checkbox strScoreChk = new Checkbox("STR Score");
+				checkboxesList.add(strScoreChk);
+				abilityPanel.add(strScoreChk, "cell 0 0");
+			}
+			{
+				Checkbox dexScoreChk = new Checkbox("DEX Score");
+				checkboxesList.add(dexScoreChk);
+				abilityPanel.add(dexScoreChk, "cell 0 1");
+			}
+			{
+				Checkbox intScoreChk = new Checkbox("INT Score");
+				checkboxesList.add(intScoreChk);
+				abilityPanel.add(intScoreChk, "cell 0 2");
+			}
+			{
+				Checkbox wisScoreChk = new Checkbox("WIS Score");
+				checkboxesList.add(wisScoreChk);
+				abilityPanel.add(wisScoreChk, "cell 0 3");
+			}
+			{
+				Checkbox chaScoreChk = new Checkbox("CHA Score");
+				checkboxesList.add(chaScoreChk);
+				abilityPanel.add(chaScoreChk, "cell 0 4");
+			}
+			{
+				Checkbox strModChk = new Checkbox("STR Mod");
+				checkboxesList.add(strModChk);
+				abilityPanel.add(strModChk, "cell 0 5");
+			}
+			{
+				Checkbox dexModChk = new Checkbox("DEX Mod");
+				checkboxesList.add(dexModChk);
+				abilityPanel.add(dexModChk, "cell 0 6");
+			}
+			{
+				Checkbox intModChk = new Checkbox("INT Mod");
+				checkboxesList.add(intModChk);
+				abilityPanel.add(intModChk, "cell 0 7");
+			}
+			{
+				Checkbox wisModChk = new Checkbox("WIS Mod");
+				checkboxesList.add(wisModChk);
+				abilityPanel.add(wisModChk, "cell 0 8");
+			}
+			{
+				Checkbox chaModChk = new Checkbox("CHA Mod");
+				checkboxesList.add(chaModChk);
+				abilityPanel.add(chaModChk, "cell 0 9");
+			}
+		}
+		{
+			JPanel miscPanel = new JPanel();
+			miscPanel.setBorder(new TitledBorder(null, "Misc", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			contentPanel.add(miscPanel, "cell 1 0,grow");
+			miscPanel.setLayout(new MigLayout("", "[]", "[][][][][][][]"));
+			{
+				Checkbox initChk = new Checkbox("Initiative");
+				checkboxesList.add(initChk);
+				miscPanel.add(initChk, "cell 0 0");
+			}
+			{
+				Checkbox fortChk = new Checkbox("Fortitude");
+				checkboxesList.add(fortChk);
+				miscPanel.add(fortChk, "cell 0 1");
+			}
+			{
+				Checkbox refChk = new Checkbox("Reflex");
+				checkboxesList.add(refChk);
+				miscPanel.add(refChk, "cell 0 2");
+			}
+			{
+				Checkbox wilChk = new Checkbox("Will");
+				checkboxesList.add(wilChk);
+				miscPanel.add(wilChk, "cell 0 3");
+			}
+			{
+				Checkbox totalHPChk = new Checkbox("Total HP");
+				checkboxesList.add(totalHPChk);
+				miscPanel.add(totalHPChk, "cell 0 4");
+			}
+			{
+				Checkbox currHPChk = new Checkbox("Current HP");
+				checkboxesList.add(currHPChk);
+				miscPanel.add(currHPChk, "cell 0 5");
+			}
+			{
+				Checkbox drChk = new Checkbox("DR");
+				checkboxesList.add(drChk);
+				miscPanel.add(drChk, "cell 0 6");
+			}
+		}
+		{
+			JPanel panel = new JPanel();
+			panel.setBorder(new TitledBorder(null, "AC", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			contentPanel.add(panel, "cell 2 0,grow");
+			panel.setLayout(new MigLayout("", "[]", "[][][][][][][][][][][][]"));
+			{
+				Checkbox totalACChk = new Checkbox("Total AC");
+				checkboxesList.add(totalACChk);
+				panel.add(totalACChk, "cell 0 0");
+			}
+			{
+				Checkbox armorChk = new Checkbox("Armor");
+				checkboxesList.add(armorChk);
+				panel.add(armorChk, "cell 0 1");
+			}
+			{
+				Checkbox shieldChk = new Checkbox("Shield");
+				checkboxesList.add(shieldChk);
+				panel.add(shieldChk, "cell 0 2");
+			}
+			{
+				Checkbox dodgeChk = new Checkbox("Dodge");
+				checkboxesList.add(dodgeChk);
+				panel.add(dodgeChk, "cell 0 3");
+			}
+			{
+				Checkbox sizeModChk = new Checkbox("Size Mod");
+				checkboxesList.add(sizeModChk);
+				panel.add(sizeModChk, "cell 0 4");
+			}
+			{
+				Checkbox naturalChk = new Checkbox("Natural");
+				checkboxesList.add(naturalChk);
+				panel.add(naturalChk, "cell 0 5");
+			}
+			{
+				Checkbox deflectChk = new Checkbox("Deflect");
+				checkboxesList.add(deflectChk);
+				panel.add(deflectChk, "cell 0 6");
+			}
+			{
+				Checkbox miscACChk = new Checkbox("Misc AC");
+				checkboxesList.add(miscACChk);
+				panel.add(miscACChk, "cell 0 7");
+			}
+			{
+				Checkbox touchACChk = new Checkbox("Touch AC");
+				checkboxesList.add(touchACChk);
+				panel.add(touchACChk, "cell 0 8");
+			}
+			{
+				Checkbox cmdChk = new Checkbox("CMD ");
+				checkboxesList.add(cmdChk);
+				panel.add(cmdChk, "cell 0 9");
+			}
+			{
+				Checkbox ffACChk = new Checkbox("Flat Footed AC");
+				checkboxesList.add(ffACChk);
+				panel.add(ffACChk, "cell 0 10");
+			}
+			{
+				Checkbox fcmdChk = new Checkbox("FCMD");
+				checkboxesList.add(fcmdChk);
+				panel.add(fcmdChk, "cell 0 11");
+			}
+		}
+		{
+			JPanel attackBonusPanel = new JPanel();
+			attackBonusPanel.setBorder(new TitledBorder(null, "Attack Bonus", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			contentPanel.add(attackBonusPanel, "cell 3 0,grow");
+			attackBonusPanel.setLayout(new MigLayout("", "[]", "[][][]"));
+			{
+				Checkbox meleeABChk = new Checkbox("Melee Attack Bonus");
+				checkboxesList.add(meleeABChk);
+				attackBonusPanel.add(meleeABChk, "cell 0 0");
+			}
+			{
+				Checkbox cmbABChk = new Checkbox("CMB Attack Bonus");
+				checkboxesList.add(cmbABChk);
+				attackBonusPanel.add(cmbABChk, "cell 0 1");
+			}
+			{
+				Checkbox rangedABChk = new Checkbox("Ranged Attack Bonus");
+				checkboxesList.add(rangedABChk);
+				attackBonusPanel.add(rangedABChk, "cell 0 2");
+			}
+		}
+		{
+			JPanel diePanel = new JPanel();
+			diePanel.setBorder(new TitledBorder(null, "Die", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			contentPanel.add(diePanel, "cell 4 0,grow");
+			diePanel.setLayout(new MigLayout("", "[]", "[][][][][][][]"));
+			{
+				Checkbox d2Chk = new Checkbox("d2");
+				checkboxesList.add(d2Chk);
+				diePanel.add(d2Chk, "cell 0 0");
+			}
+			{
+				Checkbox d3Chk = new Checkbox("d3");
+				checkboxesList.add(d3Chk);
+				diePanel.add(d3Chk, "cell 0 1");
+			}
+			{
+				Checkbox d4Chk = new Checkbox("d4");
+				checkboxesList.add(d4Chk);
+				diePanel.add(d4Chk, "cell 0 2");
+			}
+			{
+				Checkbox d6Chk = new Checkbox("d6");
+				checkboxesList.add(d6Chk);
+				diePanel.add(d6Chk, "cell 0 3");
+			}
+			{
+				Checkbox d8Chk = new Checkbox("d8");
+				checkboxesList.add(d8Chk);
+				diePanel.add(d8Chk, "cell 0 4");
+			}
+			{
+				Checkbox d10Chk = new Checkbox("d10");
+				checkboxesList.add(d10Chk);
+				diePanel.add(d10Chk, "cell 0 5");
+			}
+			{
+				Checkbox d20Chk = new Checkbox("d20");
+				checkboxesList.add(d20Chk);
+				diePanel.add(d20Chk, "cell 0 6");
+			}
 		}
 		{
 
@@ -354,27 +293,49 @@ public class EditMacroDialog extends JDialog {
 
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JLabel lblNewLabel = new JLabel("Macro Name");
-				buttonPane.add(lblNewLabel);
+				JLabel macroNameLabel = new JLabel("Macro Name");
+				buttonPane.add(macroNameLabel);
 			}
 			{
-				textField = new JTextField();
-				buttonPane.add(textField);
-				textField.setColumns(10);
+				macroNameField = new JTextField();
+				buttonPane.add(macroNameField);
+				macroNameField.setColumns(10);
 			}
 			{
-				JButton okButton = new JButton("OK");
+				okButton = new JButton("OK");
 				okButton.setActionCommand("OK");
+				okButton.addActionListener(this);
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 
 			{
-				JButton cancelButton = new JButton("Cancel");
+				cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(this);
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
 
+		}
+	}
+	
+	public int rollDie(int die) {
+		Random rand = new Random();
+		return rand.nextInt(die);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == okButton)
+		{
+			edittedMacro.setCheckedList(checkboxesList);
+			edittedMacro.setMacroName(macroNameField.getText());
+			dispose();
+		}
+		
+		else if(e.getSource() == cancelButton)
+		{
+			dispose();
 		}
 	}
 }
