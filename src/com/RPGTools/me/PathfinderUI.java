@@ -1,31 +1,24 @@
 package com.RPGTools.me;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
-import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
-
-import java.awt.Dimension;
-
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class PathfinderUI extends JFrame
 {
@@ -107,10 +100,10 @@ public class PathfinderUI extends JFrame
 		Container.add(TabPane);
 
 		CharacterSheetTab characterSheetTab = new CharacterSheetTab();
-		TabPane.add(CharacterSheetTab.getSheetPanel());
+		TabPane.add(characterSheetTab.getSheetPanel());
 		
 		MacroTab macroTab = new MacroTab();
-		TabPane.add(MacroTab.getMacroPanel());
+		TabPane.add(macroTab.getMacroPanel());
 	}
 	
 	class SaveAction implements ActionListener

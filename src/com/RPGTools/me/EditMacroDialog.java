@@ -5,6 +5,8 @@ import java.awt.Checkbox;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -16,46 +18,48 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.BadLocationException;
 
 import net.miginfocom.swing.MigLayout;
 
 import com.google.gdata.util.ServiceException;
 
-public class EditMacroDialog extends JDialog implements ActionListener {
+public class EditMacroDialog extends JDialog
+		implements
+			ItemListener,
+			ActionListener {
 
-	private final JPanel contentPanel = new JPanel();
+	private JPanel contentPanel = new JPanel();
 	private JTextField macroNameField;
-	ArrayList<Checkbox> checkboxesList;
-	public static JButton okButton;
-	public static JButton cancelButton;
-	public static MacroButton edittedMacro;
-	
+	private ArrayList<Checkbox> checkboxesList;
+	private JButton okButton;
+	private JButton cancelButton;
+	private MacroButton edittedMacro;
+	private ArrayList<JTextField> fieldsList = CharacterSheetTab
+			.getFieldsList();
+
 	/**
 	 * Create the dialog.
 	 * 
 	 * @throws ServiceException
 	 * @throws IOException
 	 */
-	public EditMacroDialog(MacroButton macro) throws IOException, ServiceException { 
+	public EditMacroDialog(MacroButton macro) throws IOException,
+			ServiceException {
 		checkboxesList = new ArrayList<Checkbox>();
 		initDialogUI();
-		
-		if(macro.getCheckedList().isEmpty() == false)
-		{	
-			for(int i=0; i<checkboxesList.size(); i++)
-				checkboxesList.get(i).setState(macro.getCheckedList().get(i).getState());
+
+		if (macro.getCheckedList().isEmpty() == false) {
+			for (int i = 0; i < checkboxesList.size(); i++)
+				checkboxesList.get(i).setState(
+						macro.getCheckedList().get(i).getState());
 		}
-		
+
 		edittedMacro = macro;
 		macroNameField.setText(macro.getButton().getText());
 		contentPanel.updateUI();
 	}
 
-	public void initDialogUI()
-	{
+	public void initDialogUI() {
 		setBounds(100, 100, 661, 605);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -63,63 +67,76 @@ public class EditMacroDialog extends JDialog implements ActionListener {
 		contentPanel.setLayout(new MigLayout("", "[][][][][]", "[]"));
 		{
 			JPanel abilityPanel = new JPanel();
-			abilityPanel.setBorder(new TitledBorder(null, "Abilities", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			abilityPanel.setBorder(new TitledBorder(null, "Abilities",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			contentPanel.add(abilityPanel, "cell 0 0,grow");
-			abilityPanel.setLayout(new MigLayout("", "[]", "[][][][][][][][][][]"));
+			abilityPanel.setLayout(new MigLayout("", "[]",
+					"[][][][][][][][][][]"));
 			{
 				Checkbox strScoreChk = new Checkbox("STR Score");
+				strScoreChk.setName("strScoreField");
 				checkboxesList.add(strScoreChk);
 				abilityPanel.add(strScoreChk, "cell 0 0");
 			}
 			{
 				Checkbox dexScoreChk = new Checkbox("DEX Score");
+				dexScoreChk.setName("dexScoreField");
 				checkboxesList.add(dexScoreChk);
 				abilityPanel.add(dexScoreChk, "cell 0 1");
 			}
 			{
 				Checkbox intScoreChk = new Checkbox("INT Score");
+				intScoreChk.setName("intScoreField");
 				checkboxesList.add(intScoreChk);
 				abilityPanel.add(intScoreChk, "cell 0 2");
 			}
 			{
 				Checkbox wisScoreChk = new Checkbox("WIS Score");
+				wisScoreChk.setName("wisScoreField");
 				checkboxesList.add(wisScoreChk);
 				abilityPanel.add(wisScoreChk, "cell 0 3");
 			}
 			{
 				Checkbox chaScoreChk = new Checkbox("CHA Score");
+				chaScoreChk.setName("chaScoreField");
 				checkboxesList.add(chaScoreChk);
 				abilityPanel.add(chaScoreChk, "cell 0 4");
 			}
 			{
 				Checkbox strModChk = new Checkbox("STR Mod");
+				strModChk.setName("strModField");
 				checkboxesList.add(strModChk);
 				abilityPanel.add(strModChk, "cell 0 5");
 			}
 			{
 				Checkbox dexModChk = new Checkbox("DEX Mod");
+				dexModChk.setName("dexModField");
 				checkboxesList.add(dexModChk);
 				abilityPanel.add(dexModChk, "cell 0 6");
 			}
 			{
 				Checkbox intModChk = new Checkbox("INT Mod");
+				intModChk.setName("intModField");
 				checkboxesList.add(intModChk);
 				abilityPanel.add(intModChk, "cell 0 7");
 			}
 			{
 				Checkbox wisModChk = new Checkbox("WIS Mod");
+				wisModChk.setName("wisModField");
 				checkboxesList.add(wisModChk);
 				abilityPanel.add(wisModChk, "cell 0 8");
 			}
 			{
 				Checkbox chaModChk = new Checkbox("CHA Mod");
+				chaModChk.setName("chaModField");
 				checkboxesList.add(chaModChk);
 				abilityPanel.add(chaModChk, "cell 0 9");
 			}
 		}
 		{
 			JPanel miscPanel = new JPanel();
-			miscPanel.setBorder(new TitledBorder(null, "Misc", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			miscPanel.setBorder(new TitledBorder(null, "Misc",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			contentPanel.add(miscPanel, "cell 1 0,grow");
 			miscPanel.setLayout(new MigLayout("", "[]", "[][][][][][][]"));
 			{
@@ -160,7 +177,8 @@ public class EditMacroDialog extends JDialog implements ActionListener {
 		}
 		{
 			JPanel panel = new JPanel();
-			panel.setBorder(new TitledBorder(null, "AC", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			panel.setBorder(new TitledBorder(null, "AC", TitledBorder.LEADING,
+					TitledBorder.TOP, null, null));
 			contentPanel.add(panel, "cell 2 0,grow");
 			panel.setLayout(new MigLayout("", "[]", "[][][][][][][][][][][][]"));
 			{
@@ -226,7 +244,8 @@ public class EditMacroDialog extends JDialog implements ActionListener {
 		}
 		{
 			JPanel attackBonusPanel = new JPanel();
-			attackBonusPanel.setBorder(new TitledBorder(null, "Attack Bonus", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			attackBonusPanel.setBorder(new TitledBorder(null, "Attack Bonus",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			contentPanel.add(attackBonusPanel, "cell 3 0,grow");
 			attackBonusPanel.setLayout(new MigLayout("", "[]", "[][][]"));
 			{
@@ -247,7 +266,8 @@ public class EditMacroDialog extends JDialog implements ActionListener {
 		}
 		{
 			JPanel diePanel = new JPanel();
-			diePanel.setBorder(new TitledBorder(null, "Die", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			diePanel.setBorder(new TitledBorder(null, "Die",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			contentPanel.add(diePanel, "cell 4 0,grow");
 			diePanel.setLayout(new MigLayout("", "[]", "[][][][][][][]"));
 			{
@@ -317,8 +337,22 @@ public class EditMacroDialog extends JDialog implements ActionListener {
 			}
 
 		}
+
+		for (int i = 0; i < checkboxesList.size(); i++)
+			checkboxesList.get(i).addItemListener(this);
 	}
-	
+
+	public int getFieldValue(String fieldName) {
+		int value = -99;
+
+		for (int i = 0; i < fieldsList.size(); i++) {
+			if (fieldsList.get(i).getDocument().getProperty("Field") == fieldName)
+				return Integer.parseInt(fieldsList.get(i).getText());
+		}
+
+		return value;
+	}
+
 	public int rollDie(int die) {
 		Random rand = new Random();
 		return rand.nextInt(die);
@@ -326,16 +360,27 @@ public class EditMacroDialog extends JDialog implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == okButton)
-		{
+		if (e.getSource() == okButton) {
 			edittedMacro.setCheckedList(checkboxesList);
 			edittedMacro.setMacroName(macroNameField.getText());
 			dispose();
 		}
-		
-		else if(e.getSource() == cancelButton)
-		{
+
+		else if (e.getSource() == cancelButton) {
 			dispose();
+		}
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		for(int i=0; i<checkboxesList.size(); i++)
+		{
+			if(e.getItem().toString() == checkboxesList.get(i).getLabel())
+			{
+				System.out.println(checkboxesList.get(i).getName());
+				System.out.println(getFieldValue(checkboxesList.get(i).getName()));
+			}
+				
 		}
 	}
 }
